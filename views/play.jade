@@ -1,0 +1,42 @@
+doctype html
+head(lang="en")
+  title Play Videos
+  //-link(href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" type="text/css")
+  link(href="/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css")
+  link(href="/css/play.css", rel="stylesheet", type="text/css")
+  //-script(src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js", type="text/javascript")
+  script(src="/js/jquery-2.1.0.js", type="text/javascript")
+  script(src="/js/play_main.js", type="text/javascript")
+  script.
+    PLAY_MAIN.init({ skipSec  : #{skipSec}
+                   , backSec  : #{backSec}
+                   , initTime : #{initTime}
+                   })
+body
+  div#header Play #{title} Video
+  div#videoContent
+    canvas(id="videoDisplay")
+    video(id="videoSource", controls=true)
+      source(src=stream, type=mimetype)
+  div#controls.hide
+    div(id="play_btn" , class="left btn paused")
+      span(id="play_sym", class="sym") &#xf04b;
+      span(id="play_txt", class="txt") PLAY
+    div(id="back_btn", class="left btn")
+      span(id="back_sym", class="sym") &#xf048;
+      span(id="back_txt", class="txt") BACK
+        small  #{backSec}sec
+    div(id="skip_btn", class="left btn")
+      span(id="skip_sym", class="sym") &#xf051;
+      span(id="skip_txt", class="txt") SKIP
+        small  #{skipSec}sec
+    div(id="reload_btn", class="left btn")
+      span(id="reload_sym", class="sym") &#xf021;
+      span(id="reload_txt", class="txt") RELOAD
+    div(id="volume" class="left")
+      div(id="volume_txt" class="left txt") Volume
+      div(id="volume_sym" class="left sym") &#xf028;
+      input(id="volume_rng", class="left rng", type="range", min=0, max=100, value=100)
+    div(id="position" class="left")
+      input(id="position_tim", class="left", type="number", value=0)
+      input(id="position_rng",  class="left rng", type="range", min=0, max=300, value=0)

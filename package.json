@@ -1,0 +1,13 @@
+{
+  "name": "express-video-server",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^3.4.8",
+    "jade": "^1.11.0",
+    "stylus": "0.52.x",
+    "nomnom": "^1.8.1"
+  }
+}
