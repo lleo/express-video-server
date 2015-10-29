@@ -2,10 +2,6 @@
 
 'use strict';
 
-/**
- * Module dependencies.
- */
-
 var express    = require('express')
   , routes     = require('./routes')
   , play       = require('./routes/play')
