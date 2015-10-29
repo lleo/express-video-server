@@ -2,10 +2,10 @@
   "name": "express-video-server",
   "description": "single page app to select and play video"
   "version": "0.0.1",
-  "main"   : "newapp.js",
+  "main"   : "video-server.js",
   "scripts": {
-    "start"       : "node newapp.js",
-    "start-debug" : "NODE_DEBUG=info,warn, error node newapp.js"
+    "start"       : "node video-server.js",
+    "start-debug" : "NODE_DEBUG=info,warn, error node video-server.js"
   },
   "dependencies"     : {
     "body-parser"    : "^1.14",
