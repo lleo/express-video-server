@@ -1,9 +1,20 @@
 {
-  "video directories" : {
-    "App Local"      : "/Users/seanegan/prj/node/apps/express-video-server/videos"
-    "SSD Videos"     : "/Users/seanegan/Movies",
-    "HDD Videos"     : "/Volumes/HDD/Users/seanegan/Movies",
-    "Toshi Videos"   : "/Volumes/Toshi/Videos",
-    "Seagate Videos" : "/Volumed/Seagate/Videos"
-  }
+  "video directories" : [
+    { "name" : "App Local",
+      "direcotry" : "/Users/seanegan/prj/node/apps/express-video-server/videos"
+    },
+    { "name" : "SSD Videos",
+      "directory" : "/Users/seanegan/Movies"
+    },
+    { "name" : "HDD Videos",
+      "directory" : "/Volumes/HDD/Users/seanegan/Movies"
+    },
+    { "name": "Toshi Videos",
+      "directory" : "/Volumes/Toshi/Videos"
+    },
+    { "name" : "Seagate Videos",
+      "directory" : "/Volumed/Seagate/Videos"
+    }
+  ],
+  "acceptable extentions" : ["mp4","mv4", "webm"
 }
