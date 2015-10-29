@@ -19,6 +19,9 @@ body
     video(id="videoSource", controls=true)
       source(src=stream, type=mimetype)
   div#controls.hide
+    div(id="fullscreen_btn" class="left btn")
+      span(id="fullscreen_sym", class="sym") &#xf066;
+      span(id="fullscreen_txt", class="txt") Full Screen
     div(id="play_btn" , class="left btn paused")
       span(id="play_sym", class="sym") &#xf04b;
       span(id="play_txt", class="txt") PLAY
@@ -40,3 +43,4 @@ body
     div(id="position" class="left")
       input(id="position_tim", class="left", type="number", value=0)
       input(id="position_rng",  class="left rng", type="range", min=0, max=300, value=0)
+

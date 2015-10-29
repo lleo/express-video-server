@@ -1,13 +1,31 @@
 {
   "name": "express-video-server",
+  "description": "single page app to select and play video"
   "version": "0.0.1",
+  "main"   : "newapp.js",
   "scripts": {
-    "start": "node app.js"
+    "start"       : "node newapp.js",
+    "start-debug" : "NODE_DEBUG=info,warn, error node newapp.js"
   },
-  "dependencies": {
-    "express": "^3.4.8",
-    "jade": "^1.11.0",
-    "stylus": "0.52.x",
-    "nomnom": "^1.8.1"
-  }
+  "dependencies"     : {
+    "body-parser"    : "^1.14",
+    "errorhandler"   : "^1.4",
+    "express"        : "^4.13",
+    "express-session": "^1.12",
+    "jade"           : "^1.11",
+    "method-override": "^2.3",
+    "morgan"         : "^1.6",
+    "multer"         : "^1.1",
+    "nomnom"         : "^1.8",
+    "serve-favicon"  : "^2.3"
+  },
+  "author"     : {
+    "name" : "LLeo",
+    "email": "lleoem@gmail.com"
+  },
+  "repository" : {
+    "type" : "git",
+    "url"  : "git://github.com/lleo/express-video-server"
+  },
+  "license" : "MIT"
 }

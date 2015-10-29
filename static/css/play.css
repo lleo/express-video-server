@@ -30,8 +30,21 @@ div#header {
   transition-timing-function: ease;
 }
 
+/*
+::-webkit-media-controls {
+  display:none !important;
+}
+video::-webkit-media-controls {
+  display:none !important;
+}
+*/
+video::-webkit-media-controls-enclosure { 
+  display:none !important;
+}
+
 .hide {
-  display: none;
+  z-index: 2147483647;
+  display: none !important;
 }
 
 /*
@@ -86,7 +99,7 @@ div#videoContent {
 }
 
 .txt {
-  display: none;
+  display: true;
   padding: 0.25em;
 }
 
@@ -101,6 +114,8 @@ div#videoContent {
 #back_btn { }
 
 #reload_btn { }
+
+#fullscreen_btn { }
 
 #volume {
   font-family: FontAwesome;

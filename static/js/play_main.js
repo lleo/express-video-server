@@ -6,6 +6,8 @@
   PLAY_MAIN = {
     init: initFn
   , canPlay: false
+  , isFullscreen: false
+  , overControls: false
   }
 
 //  var videoId
@@ -37,6 +39,7 @@
       , volumeSymId   = "#volume_sym"
       , positionTimId = "#position_tim"
       , positionRngId = "#position_rng"
+      , fullscreenId  = "#fullscreen_btn"
 
     document.addEventListener('DOMContentLoaded', function onDOMContentLoaded(){
       var videoEl       = $(videoId)[0]
@@ -49,7 +52,10 @@
         , volumeSymEl   = $(volumeSymId)[0]
         , positionTimEl = $(positionTimId)[0]
         , positionRngEl = $(positionRngId)[0]
-        , timerId, timerFirstTime = true
+        , fullscreenEl  = $(fullscreenId)[0]
+        , timerId
+        , timerFirstTime = true
+        , overControls = false
 
       console.log("onDOMContentLoaded: width=%f; height=%f;", width, height)
 
@@ -60,8 +66,9 @@
                 , "HAVE_FUTURE_DATA"
                 , "HAVE_ENOUGH_DATA" ]
 
+/* DEL:
       function onMouseMove(evt){
-        var controlsEl = $(controlsId)[0]
+//        var controlsEl = $(controlsId)[0]
 
         function longTimerFn(){
           console.log("onMouseMove: longTimerFn: controlsEl.style.display = %s", controlsEl.style.display)
@@ -95,20 +102,18 @@
         $(document.body).off('mousemove', onMouseMove)
         setTimeout(shortTimerFn, 50)
       }
+*/
 
-      function _onMouseMove(evt){
-        var controlsEl = $(controlsId)[0]
-        function longTimerFn(){
-          console.log("longTimerFn: HIDE CONTROLS; controlsEl.style.display=%o", controlsEl.style.display)
-          //controlsEl.style.display = 'none'
-          if (! $(controlsId).hasClass('hide') )
+      function onMM(evt) {
+//   n     var controlsEl = $(controlsId)[0]
+        function longTimerFn() {
+          if (!overControls && ! $(controlsId).hasClass('hide') )
             $(controlsId).addClass('hide')
           timerFirstTime = true
           timerId = undefined
         }
-        function shortTimerFn(){
-          console.log("shortTimerFn: TURN ON 'mousemove'")
-          $(document.body).on('mousemove', _onMouseMove)
+        function shortTimerFn() {
+          $(document.body).on('mousemove', onMM)
 
           if (timerId || timerFirstTime) {
             clearTimeout(timerId)
@@ -117,18 +122,31 @@
           }
         }
 
-        console.log("_onMouseMove: TURN OFF 'mousemove'")
-        $(document.body).off('mousemove', _onMouseMove)
+        $(document.body).off('mousemove', onMM)
 
-        console.log("_onMouseMove: SHOW CONTROLS; controlsEl.style.display=%o;", controlsEl.style.display)
-        //controlsEl.style.display = 'block'
         if ( $(controlsId).hasClass('hide') )
           $(controlsId).removeClass('hide')
 
         setTimeout(shortTimerFn, 50)
       }
-      $(document.body).on('mousemove', _onMouseMove)
+      $(document.body).on('mousemove', onMM)
 
+      function onMouseEnter(evt) {
+        overControls = true
+      }
+      function onMouseLeave(_evt) {
+        overControls = false
+        function longTimerFn(evt) {
+          if (!overControls && ! $(controlsId).hasClass('hide') )
+            $(controlsId).addClass('hide')
+          timerFirstTime = true
+          timerId = undefined
+        }
+        setTimeout(longTimerFn, 50)
+      }
+      $(controlsId).on('mouseenter', onMouseEnter)
+      $(controlsId).on('mouseleave', onMouseLeave)
+      
       $(videoId).on('play', function onPlayStartCanvasTimer(evt){
         console.log("onPlayStartCanvasTimer: videoEl.id=%s", videoEl.id)
 
@@ -149,6 +167,11 @@
         timerFn()
       })
 
+      $(videoId).on('fullscreen', function onFullscreen(evt) {
+        console.log("==========================================")
+        console.log("FULLSCREEN EVENT DETECTED ON Video Element")
+        console.log("==========================================")
+      })
 
       $(videoId).on('canplay', function onCanPlay(evt) {
         PLAY_MAIN.canPlay = videoEl.readyState === HTMLMediaElement.HAVE_ENOUGH_DATA
@@ -230,6 +253,7 @@
         //
         //console.log("onTimeUpdate: evt.target.id=%s; videoEl.currentTime=%f;"
         //           , evt.target.id, videoEl.currentTime)
+        //history.pushState(stateObj, "page 2", "bar.html");
         positionRngEl.value = evt.target.currentTime
         positionTimEl.value = Math.floor(evt.target.currentTime)
 
@@ -246,6 +270,44 @@
         if (play_btn.hasClass('playing')) {
           play_btn.removeClass('playing')
           play_btn.addClass('paused')
+        }
+
+      })
+
+      $(fullscreenId).click(function onFullscreenBtnClick(evt) {
+        var videoEl = $(videoId)[0]
+        var isFullscreen= false;
+
+        console.log("videoEl.fullscreenElement =", videoEl.fullscreenElement )
+        
+        if(!PLAY_MAIN.isFullscreen){
+          if (videoEl.requestFullscreen) {
+            videoEl.requestFullscreen();
+          } 
+          else if (videoEl.mozRequestFullScreen) {
+            videoEl.mozRequestFullScreen(); // Firefox
+          } 
+          else if (videoEl.webkitRequestFullscreen) {
+            videoEl.webkitRequestFullscreen(); // Chrome and Safari
+          }
+          isFullscreen=true;
+
+          //fullscreen_btn.classList.remove('icon-fullscreen-alt');
+          //fullscreen_btn.classList.add('icon-fullscreen-exit-alt');
+        }
+        else{
+          if(videoEl.cancelFullScreen) {
+            videoEl.cancelFullScreen();
+          } 
+          else if(videoEl.mozCancelFullScreen) {
+            videoEl.mozCancelFullScreen();
+          } 
+          else if(videoEl.webkitCancelFullScreen) {
+            videoEl.webkitCancelFullScreen();
+          }
+          isFullscreen=false;
+          fullscreenbutton.classList.add('icon-fullscreen-alt');
+          fullscreenbutton.classList.remove('icon-fullscreen-exit-alt');
         }
 
       })
@@ -380,7 +442,41 @@
           videoEl.currentTime = positionRngEl.valueAsNumber
         }
       })
+
+
+      function filesOnly(cfgMap) {
+        cfgMap.filter(function (e,i,a) {
+          
+        })
+      }
+      
+      function loadDirSync(fqdn) {
+        if ( fs.existsSync(fqdn) ) {
+          return fs.readdirSync(fqdn)
+          .map(function(fn){
+            return { filename: fn
+                   , stat: fs.statSync(fs) }
+          })
+        }
+      }
+
+      function readConfigSync(fqfn) {
+        var json_raw
+          , json
+
+        try {
+          json_raw = fs.readFileSync(fqfn)
+          json = JSON.parse(json_raw)
+        }
+        catch (x) {
+          return
+        }
+
+        return json
+      }
+      
     }) //document.addEventListener('DOMContentLoaded', function(){...})
   } //initFn()
+
 
 })(window)

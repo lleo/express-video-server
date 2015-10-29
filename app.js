@@ -1,10 +1,13 @@
+#!/usr/bin/env node
+
+'use strict';
 
 /**
  * Module dependencies.
  */
 
 var express    = require('express')
-var routes     = require('./routes')
+  , routes     = require('./routes')
   , play       = require('./routes/play')
   , stream     = require('./routes/stream')
   , http       = require('http')
