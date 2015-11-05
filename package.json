@@ -1,6 +1,6 @@
 {
   "name": "express-video-server",
-  "description": "single page app to select and play video"
+  "description": "single page app to select and play video",
   "version": "0.0.1",
   "main"   : "video-server.js",
   "scripts": {

@@ -276,38 +276,47 @@
 
       $(fullscreenId).click(function onFullscreenBtnClick(evt) {
         var videoEl = $(videoId)[0]
-        var isFullscreen= false;
+        //var videoEl = $(canvasId)[0]
 
-        console.log("videoEl.fullscreenElement =", videoEl.fullscreenElement )
+        //console.log("videoEl.fullscreenElement =", videoEl.fullscreenElement )
+        console.log("PLAY_MAIN.isFullscreen =", PLAY_MAIN.isFullscreen)
         
         if(!PLAY_MAIN.isFullscreen){
+          console.log("Trying to request fullscreen videoEl")
           if (videoEl.requestFullscreen) {
+            console.log("HAS videoEl.requestFullscreen")
             videoEl.requestFullscreen();
           } 
           else if (videoEl.mozRequestFullScreen) {
+            console.log("HAS videoEl.mozRequestFullscreen")
             videoEl.mozRequestFullScreen(); // Firefox
           } 
           else if (videoEl.webkitRequestFullscreen) {
+            console.log("HAS videoEl.webkitRequestFullscreen")
             videoEl.webkitRequestFullscreen(); // Chrome and Safari
           }
-          isFullscreen=true;
+          PLAY_MAIN.isFullscreen=true;
 
           //fullscreen_btn.classList.remove('icon-fullscreen-alt');
           //fullscreen_btn.classList.add('icon-fullscreen-exit-alt');
         }
         else{
-          if(videoEl.cancelFullScreen) {
-            videoEl.cancelFullScreen();
+          console.log("Trying to cancel fullscreen document")
+          if(document.cancelFullScreen) {
+            console.log("HAS document.cancelFullScreen")
+            document.cancelFullScreen();
           } 
-          else if(videoEl.mozCancelFullScreen) {
-            videoEl.mozCancelFullScreen();
+          else if(document.mozCancelFullScreen) {
+            console.log("HAS document.mozCancelFullScreen")
+            document.mozCancelFullScreen();
           } 
-          else if(videoEl.webkitCancelFullScreen) {
-            videoEl.webkitCancelFullScreen();
+          else if(document.webkitCancelFullScreen) {
+            console.log("HAS document.webkitCancelFullScreen")
+            document.webkitCancelFullScreen();
           }
-          isFullscreen=false;
-          fullscreenbutton.classList.add('icon-fullscreen-alt');
-          fullscreenbutton.classList.remove('icon-fullscreen-exit-alt');
+          PLAY_MAIN.isFullscreen=false;
+          //fullscreen_btn.classList.add('icon-fullscreen-alt');
+          //fullscreen_btn.classList.remove('icon-fullscreen-exit-alt');
         }
 
       })

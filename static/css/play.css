@@ -19,6 +19,7 @@ div#header {
 
 #controls {
   /*z-index: 1;*/
+  z-index: 2147483647;
   position: relative;
   top: -5em;
   margin-left: 16%;
