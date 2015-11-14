@@ -3,6 +3,7 @@
 'use strict';
 
 var express    = require('express')
+  , methodOverride = require('method-override')
   , routes     = require('./routes')
   , play       = require('./routes/play')
   , stream     = require('./routes/stream')
@@ -35,7 +36,8 @@ app.use(express.favicon()) //currently switched places with express.logger()
 
 app.use(express.json())
 app.use(express.urlencoded())
-app.use(express.methodOverride())
+//app.use(express.methodOverride())
+app.use(methodOverride())
 app.use(app.router)
 app.use(stylus.middleware(path.join(__dirname, 'static')))
 app.use(express.static(path.join(__dirname, 'static')))

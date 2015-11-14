@@ -4,7 +4,7 @@
  */
 
 exports.index = function(req, res){
-  var cfg = req.app.get('config')
+  var cfg = { }
   cfg['title'] = req.app.get('title')
   res.render('index', cfg)
 };
