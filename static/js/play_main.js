@@ -66,46 +66,7 @@
                 , "HAVE_FUTURE_DATA"
                 , "HAVE_ENOUGH_DATA" ]
 
-/* DEL:
-      function onMouseMove(evt){
-//        var controlsEl = $(controlsId)[0]
-
-        function longTimerFn(){
-          console.log("onMouseMove: longTimerFn: controlsEl.style.display = %s", controlsEl.style.display)
-          if (controlsEl.style.display != 'none') {
-            console.log("onMouseMove: longTimerFn: setting controlsEl.style.display = 'none'; cur=%s", controlsEl.style.display)
-            controlsEl.style.display = 'none'
-          }
-        }
-        function shortTimerFn(){
-          console.log("onMouseMove: shortTimerFn: turning onMouseMove ON; timerId=%o", timerId)
-          $(document.body).on('mousemove', onMouseMove)
-
-          if (timerFirstTime || timerId) {
-            console.log("onMouseMove: shortTimerFn: clearTimeout: timerId = %o", timerId)
-            if (timerId) clearTimeout(timerId)
-            if (timerFirstTime) timerFirstTime = false
-            timerId = setTimeout(longTimerFn, 2000)
-            console.log("onMouseMove: shortTimerFn: setTimeout: timerId = %o", timerId)
-          }
-
-        }
-
-        if (controlsEl.style.display != 'block') {
-          console.log("onMouseMove: setting controlsEl.style.display = 'block'")
-          controlsEl.style.display = 'block'
-        }
-
-        //throttle 'mousemove' events
-        //
-        console.log("onMouseMove: turning onMouseMove OFF")
-        $(document.body).off('mousemove', onMouseMove)
-        setTimeout(shortTimerFn, 50)
-      }
-*/
-
       function onMM(evt) {
-//   n     var controlsEl = $(controlsId)[0]
         function longTimerFn() {
           if (!overControls && ! $(controlsId).hasClass('hide') )
             $(controlsId).addClass('hide')
